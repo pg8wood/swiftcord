@@ -30,7 +30,9 @@ public extension APIRequest {
 }
 
 extension APIRequest where Response: Decodable {
-    func decodeResponse(from data: Data) throws -> Response {
-        try JSONDecoder().decode(Response.self, from: data)
+    public func decodeResponse(from data: Data) throws -> Response {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return try decoder.decode(Response.self, from: data)
     }
 }

@@ -146,7 +146,9 @@ public class DiscordGateway: WebSocketGateway {
         }
         
         let message: GatewayMessage = {
-            guard let message = try? JSONDecoder().decode(GatewayMessage.self, from: data) else {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            guard let message = try? decoder.decode(GatewayMessage.self, from: data) else {
                 print("Error decoding gateway message")
                 
                 let jsonString = String(data: data, encoding: .utf8) ?? "Invalid JSON"
